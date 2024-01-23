@@ -5,12 +5,14 @@ namespace App\Form;
 use App\Entity\Address;
 use App\Entity\Annonce;
 use App\Entity\Equipement;
-use App\Entity\TypeLogement;
 use App\Entity\Utilisateur;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\TypeLogement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AnnonceType extends AbstractType
 {
@@ -36,6 +38,11 @@ class AnnonceType extends AbstractType
             ->add('address', AddressType::class,[
                 'label'=>false
             ])
+            ->add('imageFile', FileType::class, [
+                "required" => false,
+                "label" => "Couverture"
+            ])
+            ->add('save', SubmitType::class, ['label'=> "Enregistrer"])
             
         ;
         

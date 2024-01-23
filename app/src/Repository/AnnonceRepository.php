@@ -36,6 +36,7 @@ class AnnonceRepository extends ServiceEntityRepository
             a.id,
             a.prix,
             a.nombreCouchage,
+            a.fileName,
             ad.city,
             ad.country,
             t.label

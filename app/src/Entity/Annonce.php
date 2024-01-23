@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\AnnonceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AnnonceRepository;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
+#[Vich\Uploadable]
 class Annonce
 {
     #[ORM\Id]
@@ -34,6 +39,29 @@ class Annonce
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TypeLogement $typeLogement = null;
+
+    #[ORM\Column(type:"string",length: 255, nullable: true)]
+    private ?string $fileName = null;
+
+    #[Vich\UploadableField(mapping: "annonces", fileNameProperty: "filename")]
+    private ? File $imageFile=null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updateAt = null;
+
+    public function getImageFile() : ?File
+     {
+        return $this->imageFile;
+     }
+
+     public function setImageFile(?File $imageFile): Annonce
+     {
+        $this->imageFile = $imageFile;
+        if( $imageFile !== null){
+            $this->updateAt = new \DateTime("now");
+        }
+        return $this;
+     }
 
     public function __construct()
     {
@@ -125,6 +153,30 @@ class Annonce
     public function setTypeLogement(?TypeLogement $typeLogement): static
     {
         $this->typeLogement = $typeLogement;
+
+        return $this;
+    }
+
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
+    }
+
+    public function setFileName(?string $fileName): Annonce
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(?\DateTimeInterface $updateAt): static
+    {
+        $this->updateAt = $updateAt;
 
         return $this;
     }

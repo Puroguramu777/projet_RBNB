@@ -16,8 +16,17 @@
         <a href="{{ path('app_annonce_new') }}" class="upload">Mettre mon logement sur RBNB</a>
     <div class="row d-flex flex-row justify-content-center">
         {% for annonce in annonces %}
+        
         <div class="card border-primary text-white bg-info mb-4 me-5 mt-4" style="width: 15%;">
-                Prix par nuit: {{ annonce.prix }}€ <br>
+             {% if annonce.fileName is null %}
+                    <img src="{{ asset('images/default.jpg') }}"
+                         alt="image par défault d'une maison" class="card-img-top" />
+                         {% else %} 
+                         <img src="/images/{{annonce.fileName}}"
+                                 alt="image de la maison" class="card-img-top" />
+                         {% endif %}     
+            
+            Prix par nuit: {{ annonce.prix }}€ <br>
                 Nombre de couchage: {{ annonce.nombreCouchage}}
                 <br>
                

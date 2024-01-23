@@ -26,8 +26,6 @@ class HomeController extends AbstractController
     }
     
 
-   
-    
     
     #[Route("/accueil", name:"accueil", methods:['POST', 'GET'])]
     public function home(){
