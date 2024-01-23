@@ -20,6 +20,43 @@ class AnnonceRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Annonce::class);
     }
+    public function findAllAnnonce()
+    {
+        $db = $this->findAllOptimize();
+        return $db->getQuery()->getResult();
+    }
+
+    public function findAllOptimize()
+    {
+        
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT
+            a.id,
+            a.prix,
+            a.nombreCouchage,
+            ad.city,
+            ad.country,
+            t.label
+            FROM App\Entity\Annonce a
+            JOIN a.address ad
+            join a.typeLogement t   
+            
+           ');
+            
+            return $query->getResult();
+        
+        
+        
+        
+        // return $this->createQueryBuilder('a')
+        //     ->leftJoin('a.typeLogement', 'typeLogement')
+        //     ->addSelect('typeLogement');
+            
+    }
+
+    
 
 //    /**
 //     * @return Annonce[] Returns an array of Annonce objects

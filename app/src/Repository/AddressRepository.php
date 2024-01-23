@@ -21,6 +21,19 @@ class AddressRepository extends ServiceEntityRepository
         parent::__construct($registry, Address::class);
     }
 
+    public function findAllAddress()
+    {
+        $db = $this->findAllOptimize();
+        return $db->getQuery()->getResult();
+    }
+
+    public function findAllOptimize()
+    {
+        return $this->createQueryBuilder('ad');
+
+            
+    }
+
 //    /**
 //     * @return Address[] Returns an array of Address objects
 //     */

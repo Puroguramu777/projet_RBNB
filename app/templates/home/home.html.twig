@@ -7,10 +7,26 @@
     <title>RBNB | Accueil</title>
 </head>
 <body>
-    <h1 class="container">Bienvenue sur RBNB</h1>
-    <div class="menu">
-        <a href="{{ path('app_annonce_new') }}">Mettre mon logement sur RBNB</a>
-    </div>
+    
+    <div class="row d-flex flex-row justify-content-center title pb-3">
+        <h1 class="row d-flex flex-row justify-content-center">Bienvenue sur RBNB</h1>
+    </div>    
+        <a href="{{ path('accueil') }}"><img src="/css/assets/logo.png" alt="logo RBNB"class="logo"></a>
+    
+        <a href="{{ path('app_annonce_new') }}" class="upload">Mettre mon logement sur RBNB</a>
+    <div class="row d-flex flex-row justify-content-center">
+        {% for annonce in annonces %}
+        <div class="card border-primary text-white bg-info mb-4 me-5 mt-4" style="width: 15%;">
+                Prix par nuit: {{ annonce.prix }}€ <br>
+                Nombre de couchage: {{ annonce.nombreCouchage}}
+                <br>
+               
+                    <div class="country">{{ annonce.city }}</div>{{ annonce.country }}
+                        
+                
+            </div>
+            {% endfor %}
+        
 </body>
 </html>
 

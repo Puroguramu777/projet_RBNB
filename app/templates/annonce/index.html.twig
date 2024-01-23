@@ -9,9 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>NbreCouchage</th>
                 <th>Prix</th>
-                <th>Image</th>
+                <th>NombreCouchage</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,9 +18,8 @@
         {% for annonce in annonces %}
             <tr>
                 <td>{{ annonce.id }}</td>
-                <td>{{ annonce.nbreCouchage }}</td>
                 <td>{{ annonce.prix }}</td>
-                <td>{{ annonce.image }}</td>
+                <td>{{ annonce.nombreCouchage }}</td>
                 <td>
                     <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}">show</a>
                     <a href="{{ path('app_annonce_edit', {'id': annonce.id}) }}">edit</a>
@@ -29,7 +27,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

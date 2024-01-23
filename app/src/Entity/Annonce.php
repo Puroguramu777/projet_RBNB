@@ -16,23 +16,20 @@ class Annonce
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $nbreCouchage = null;
-
-    #[ORM\Column]
     private ?int $prix = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    #[ORM\Column]
+    private ?int $nombreCouchage = null;
+
+    #[ORM\ManyToOne(inversedBy: 'annonces')]
+    private ?Utilisateur $utilisateur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'annonces',cascade:['persist'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Address $address = null;
 
     #[ORM\ManyToMany(targetEntity: Equipement::class, inversedBy: 'annonces')]
     private Collection $equipement;
-
-    #[ORM\ManyToOne(inversedBy: 'annonce')]
-    private ?Utilisateur $utilisateur = null;
-
-    #[ORM\ManyToOne(inversedBy: 'annonces')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Address $address = null;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     #[ORM\JoinColumn(nullable: false)]
@@ -48,18 +45,6 @@ class Annonce
         return $this->id;
     }
 
-    public function getNbreCouchage(): ?int
-    {
-        return $this->nbreCouchage;
-    }
-
-    public function setNbreCouchage(int $nbreCouchage): static
-    {
-        $this->nbreCouchage = $nbreCouchage;
-
-        return $this;
-    }
-
     public function getPrix(): ?int
     {
         return $this->prix;
@@ -72,38 +57,14 @@ class Annonce
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getNombreCouchage(): ?int
     {
-        return $this->image;
+        return $this->nombreCouchage;
     }
 
-    public function setImage(string $image): static
+    public function setNombreCouchage(int $nombreCouchage): static
     {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Equipement>
-     */
-    public function getEquipement(): Collection
-    {
-        return $this->equipement;
-    }
-
-    public function addEquipement(Equipement $equipement): static
-    {
-        if (!$this->equipement->contains($equipement)) {
-            $this->equipement->add($equipement);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipement(Equipement $equipement): static
-    {
-        $this->equipement->removeElement($equipement);
+        $this->nombreCouchage = $nombreCouchage;
 
         return $this;
     }
@@ -128,6 +89,30 @@ class Annonce
     public function setAddress(?Address $address): static
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Equipement>
+     */
+    public function getEquipement(): Collection
+    {
+        return $this->equipement;
+    }
+
+    public function addEquipement(Equipement $equipement): static
+    {
+        if (!$this->equipement->contains($equipement)) {
+            $this->equipement->add($equipement);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipement(Equipement $equipement): static
+    {
+        $this->equipement->removeElement($equipement);
 
         return $this;
     }

@@ -24,18 +24,15 @@ class Utilisateur
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column]
-    private ?bool $isHote = null;
-
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Annonce::class)]
-    private Collection $annonce;
+    private Collection $annonces;
 
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Reservation::class)]
     private Collection $reservation;
 
     public function __construct()
     {
-        $this->annonce = new ArrayCollection();
+        $this->annonces = new ArrayCollection();
         $this->reservation = new ArrayCollection();
     }
 
@@ -80,30 +77,18 @@ class Utilisateur
         return $this;
     }
 
-    public function isIsHote(): ?bool
-    {
-        return $this->isHote;
-    }
-
-    public function setIsHote(bool $isHote): static
-    {
-        $this->isHote = $isHote;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Annonce>
      */
-    public function getAnnonce(): Collection
+    public function getAnnonces(): Collection
     {
-        return $this->annonce;
+        return $this->annonces;
     }
 
     public function addAnnonce(Annonce $annonce): static
     {
-        if (!$this->annonce->contains($annonce)) {
-            $this->annonce->add($annonce);
+        if (!$this->annonces->contains($annonce)) {
+            $this->annonces->add($annonce);
             $annonce->setUtilisateur($this);
         }
 
@@ -112,7 +97,7 @@ class Utilisateur
 
     public function removeAnnonce(Annonce $annonce): static
     {
-        if ($this->annonce->removeElement($annonce)) {
+        if ($this->annonces->removeElement($annonce)) {
             // set the owning side to null (unless already changed)
             if ($annonce->getUtilisateur() === $this) {
                 $annonce->setUtilisateur(null);

@@ -17,28 +17,31 @@ class AnnonceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nbreCouchage')
             ->add('prix')
-            ->add('image')
-            ->add('equipement', EntityType::class, [
-                'class' => Equipement::class,
-'choice_label' => 'id',
-'multiple' => true,
-            ])
-            ->add('utilisateur', EntityType::class, [
-                'class' => Utilisateur::class,
-'choice_label' => 'id',
-            ])
+            ->add('nombreCouchage')
+            
             ->add('address', EntityType::class, [
                 'class' => Address::class,
-'choice_label' => 'id',
+'choice_label' => 'city',
+            ])
+            ->add('equipement', EntityType::class, [
+                'class' => Equipement::class,
+'choice_label' => 'label',
+'multiple' => true,
             ])
             ->add('typeLogement', EntityType::class, [
                 'class' => TypeLogement::class,
-'choice_label' => 'id',
+'choice_label' => 'label',
             ])
+            ->add('address', AddressType::class,[
+                'label'=>false
+            ])
+            
         ;
+        
     }
+
+    
 
     public function configureOptions(OptionsResolver $resolver): void
     {
