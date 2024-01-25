@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Entity\Reservation;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -21,6 +22,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private array $roles = [];
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Annonce::class)]
+    private Collection $annonces;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reservation::class)]
+    private Collection $reservation;
 
     /**
      * @var string The hashed password
@@ -107,7 +114,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->annonces->contains($annonce)) {
             $this->annonces->add($annonce);
-            $annonce->setUtilisateur($this);
+            $annonce->setUser($this);
         }
 
         return $this;
@@ -117,8 +124,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->annonces->removeElement($annonce)) {
             // set the owning side to null (unless already changed)
-            if ($annonce->getUtilisateur() === $this) {
-                $annonce->setUtilisateur(null);
+            if ($annonce->getUser() === $this) {
+                $annonce->setUser(null);
             }
         }
 
@@ -137,7 +144,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->reservation->contains($reservation)) {
             $this->reservation->add($reservation);
-            $reservation->setUtilisateur($this);
+            $reservation->setUser($this);
         }
 
         return $this;
@@ -147,8 +154,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->reservation->removeElement($reservation)) {
             // set the owning side to null (unless already changed)
-            if ($reservation->getUtilisateur() === $this) {
-                $reservation->setUtilisateur(null);
+            if ($reservation->getUser() === $this) {
+                $reservation->setUser(null);
             }
         }
 

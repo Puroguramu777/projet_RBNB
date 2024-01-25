@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Address;
 use App\Entity\Annonce;
 use App\Entity\Equipement;
-use App\Entity\Utilisateur;
+
 use App\Entity\TypeLogement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

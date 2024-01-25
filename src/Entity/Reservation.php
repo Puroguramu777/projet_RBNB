@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\ReservationRepository;
+use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReservationRepository;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -21,7 +22,7 @@ class Reservation
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservation')]
-    private ?Utilisateur $utilisateur = null;
+    private ?User $user = null;
 
     //Récupération de toute les propriétés de l'entité
     public function getId(): ?int
@@ -53,14 +54,14 @@ class Reservation
         return $this;
     }
 
-    public function getUtilisateur(): ?Utilisateur
+    public function getUser(): ?User
     {
-        return $this->utilisateur;
+        return $this->user;
     }
 
-    public function setUtilisateur(?Utilisateur $utilisateur): static
+    public function setUser(?User $user): static
     {
-        $this->utilisateur = $utilisateur;
+        $this->user = $user;
 
         return $this;
     }
