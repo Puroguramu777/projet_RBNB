@@ -11,10 +11,17 @@
 .upload{
     position: absolute;
     top: 20px;
-    right: 200px; 
+    right: 120px; 
 }
 
 .country{
     font-weight: bold;
     
+}
+
+.user{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
 }

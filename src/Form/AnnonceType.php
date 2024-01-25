@@ -22,7 +22,6 @@ class AnnonceType extends AbstractType
         $builder
             ->add('prix')
             ->add('nombreCouchage')
-            
             ->add('address', EntityType::class, [
                 'class' => Address::class,
 'choice_label' => 'city',

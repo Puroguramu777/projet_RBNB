@@ -14,6 +14,13 @@
         <a href="{{ path('accueil') }}"><img src="/css/assets/logo.png" alt="logo RBNB"class="logo"></a>
     
         <a href="{{ path('app_annonce_new') }}" class="upload">Mettre mon logement sur RBNB</a>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if app.user %}
+        <a href="/user/{{ app.user.id }}"><i class="fa-solid fa-circle-user user"></i></a>    
+            {% endif %}
+        {% else %}
+        <a href="{{ path('app_login') }}"><i class="fa-solid fa-circle-user user"></i></a>
+        {% endif %}
     <div class="row d-flex flex-row justify-content-center">
         {% for annonce in annonces %}
         

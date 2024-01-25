@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
 class HomeController extends AbstractController
@@ -38,6 +39,8 @@ class HomeController extends AbstractController
             
         ]);
     }
+
+    
 
      
 
