@@ -7,6 +7,7 @@ use App\Form\AnnonceType;
 use App\Repository\AnnonceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,17 +24,20 @@ class AnnonceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_annonce_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
         $annonce = new Annonce();
         $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $security->getUser();
+            $annonce->setUser($user);
             $entityManager->persist($annonce);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_annonce_index', [], Response::HTTP_SEE_OTHER);
+            
         }
 
         return $this->render('annonce/new.html.twig', [
@@ -57,6 +61,7 @@ class AnnonceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $entityManager->flush();
 
             return $this->redirectToRoute('app_annonce_index', [], Response::HTTP_SEE_OTHER);
@@ -77,5 +82,15 @@ class AnnonceController extends AbstractController
         }
 
         return $this->redirectToRoute('app_annonce_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}', name: 'myannonce', methods: ['POST'])]
+    public function getMyAnnonce(Request $request, Annonce $annonce, EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('annonce/show.html.twig', [
+            'annonce' => $annonce,
+        ]);
+
+        
     }
 }

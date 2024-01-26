@@ -57,6 +57,30 @@ class AnnonceRepository extends ServiceEntityRepository
             
     }
 
+    public function findByUser(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT
+            a.id,
+            a.prix,
+            a.nombreCouchage,
+            a.fileName,
+            ad.city,
+            ad.country,
+            t.label
+            FROM App\Entity\Annonce a
+            JOIN a.address ad
+            join a.typeLogement t 
+            WHERE a.user = :id'
+            
+           )->setParameter('id', $id);
+
+            
+            return $query->getResult();
+    }
+
     
 
 //    /**

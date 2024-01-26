@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\AnnonceRepository;
 use App\Repository\UserRepository;
+
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +20,11 @@ class UserController extends AbstractController
 {
     private UserPasswordHasherInterface $encoder;
 
-    public function __construct(UserPasswordHasherInterface $encoder)
+    public function __construct(UserPasswordHasherInterface $encoder, )
     {
         //on injecte la dépendance dans le constructeur
         $this->encoder = $encoder;
+        
     }
     
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
@@ -57,10 +61,14 @@ class UserController extends AbstractController
 
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user): Response
+    public function show(User $user, int $id, AnnonceRepository $annonceRepository): Response
     {
+        $annonces = $annonceRepository->findByUser($id);
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'annonces'=>$annonces,
+            
+
         ]);
     }
 

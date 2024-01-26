@@ -8,16 +8,8 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
                 <th>Email</th>
                 <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
             </tr>
             <tr>
                 <th>LastName</th>
@@ -29,9 +21,35 @@
             </tr>
         </tbody>
     </table>
-
-
     <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+   
 
     {{ include('user/_delete_form.html.twig') }}
+
+    <h3>Mes annonces:</h3>
+    {% if app.user %}
+    {% for annonce in annonces %}
+
+    <div class="card border-primary text-white bg-info mb-4 me-5 mt-4" style="width: 15%;">
+        {% if annonce.fileName is null %}
+               <img src="{{ asset('images/default.jpg') }}"
+                    alt="image par défault d'une maison" class="card-img-top" />
+                    {% else %} 
+                    <img src="/images/{{annonce.fileName}}"
+                            alt="image de la maison" class="card-img-top" />
+                    {% endif %}     
+       
+       Prix par nuit: {{ annonce.prix }}€ <br>
+           Nombre de couchage: {{ annonce.nombreCouchage}}
+            <div class="country">{{ annonce.city }}</div>{{ annonce.country }} 
+
+            
+          
+               
+                   
+           
+       </div>
+    {% endfor %}
+    {% endif %}
+
 {% endblock %}
