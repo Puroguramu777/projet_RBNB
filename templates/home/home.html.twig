@@ -8,42 +8,37 @@
 </head>
 <body>
     
-    <div class="row d-flex flex-row justify-content-center title pb-3">
-        <h1 class="row d-flex flex-row justify-content-center">Bienvenue sur RBNB</h1>
-    </div>    
-        <a href="{{ path('accueil') }}"><img src="/css/assets/logo.png" alt="logo RBNB"class="logo"></a>
     
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {% if app.user %}
-        <a href="{{ path('app_annonce_new') }}" class="upload">Mettre mon logement sur RBNB</a>
-        <a href="/user/{{ app.user.id }}"><i class="fa-solid fa-circle-user user"></i></a>    
-            {% endif %}
-        {% else %}
-        <a href="{{ path('app_login') }}" class="upload">Mettre mon logement sur RBNB</a>
-        <a href="{{ path('app_login') }}"><i class="fa-solid fa-circle-user user"></i></a>
-        {% endif %}
-    <div class="row d-flex flex-row justify-content-center">
         {% for annonce in annonces %}
         
-        <div class="card border-primary text-white bg-info mb-4 me-5 mt-4" style="width: 15%;">
+        
+        <div class="card border-primary text-white bg-light mb-4 me-5 mt-4" style="width: 15%;">
              {% if annonce.fileName is null %}
-                    <img src="{{ asset('images/default.jpg') }}"
+             <a href="{{path('app_annonce_show', {'id': annonce.id})}}">     
+             <img src="{{ asset('images/default.jpg') }}"
                          alt="image par défault d'une maison" class="card-img-top" />
+                        </a>  
                          {% else %} 
-                         <img src="/images/{{annonce.fileName}}"
-                                 alt="image de la maison" class="card-img-top" />
-                         {% endif %}     
+                         <a href="{{path('app_annonce_show', {'id': annonce.id})}}">
+                            <img src="/images/{{annonce.fileName}}" alt="image de la maison" class="card-img-top" />             
+                        </a>
+            {% endif %}     
             
-            Prix par nuit: {{ annonce.prix }}€ <br>
+            <p class="text-dark">Prix par nuit: {{ annonce.prix }}€ <br>
                 Nombre de couchage: {{ annonce.nombreCouchage}}
                 <br>
                
-                    <div class="country">{{ annonce.city }}</div>{{ annonce.country }}
-                        
+                    <div class="country text-dark ">{{ annonce.city }}<br>{{ annonce.country }}</div>
+                    
+                    
+                    
+            </p>
+                    
+                    
+                </div>
+                {% endfor %}
+                    
                 
-            </div>
-            {% endfor %}
-        
 </body>
 </html>
 

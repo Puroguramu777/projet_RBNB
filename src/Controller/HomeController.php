@@ -9,6 +9,7 @@ use App\Repository\AddressRepository;
 use App\Repository\AnnonceRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -37,8 +38,20 @@ class HomeController extends AbstractController
             //On récupère/trouve toutes les annonces dans la bdd
             "annonces" => $this->annonceRepo->findAllOptimize(),
             
+            
+        ]);
+
+ 
+    }
+
+    #[Route('detail/{id}', name: 'app_annonce_show', methods: ['GET'])]
+    public function show(int $id, Annonce $annonce): Response
+    {
+        return $this->render('annonce/show.html.twig', [
+            'annonce' => $annonce,
         ]);
     }
+    
 
     
 

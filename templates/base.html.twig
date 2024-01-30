@@ -18,8 +18,24 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
         {% endblock %}
+        <div class="row d-flex flex-row justify-content-center title pb-3">
+            <h1 class="row d-flex flex-row justify-content-center">Logez et Hebergez sur RBNB</h1>
+        </div>    
+            <a href="{{ path('accueil') }}"><img src="/css/assets/logo.png" alt="logo RBNB"class="logo"></a>
+        
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if app.user %}
+            <a href="{{ path('app_annonce_new') }}" class="upload">Mettre mon logement sur RBNB</a>
+            <a href="/user/{{ app.user.id }}"><i class="fa-solid fa-circle-user user"></i></a>    
+                {% endif %}
+            {% else %}
+            <a href="{{ path('app_login') }}" class="upload">Mettre mon logement sur RBNB</a>
+            <a href="{{ path('app_login') }}"><i class="fa-solid fa-circle-user user"></i></a>
+            {% endif %}
+        <div class="row d-flex flex-row justify-content-center">
     </head>
     <body>
         {% block body %}{% endblock %}
     </body>
+    <footer></footer>
 </html>

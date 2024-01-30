@@ -46,13 +46,7 @@ class AnnonceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_annonce_show', methods: ['GET'])]
-    public function show(Annonce $annonce): Response
-    {
-        return $this->render('annonce/show.html.twig', [
-            'annonce' => $annonce,
-        ]);
-    }
+    
 
     #[Route('/{id}/edit', name: 'app_annonce_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Annonce $annonce, EntityManagerInterface $entityManager): Response

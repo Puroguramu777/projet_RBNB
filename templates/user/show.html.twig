@@ -29,8 +29,7 @@
     <h3>Mes annonces:</h3>
     {% if app.user %}
     {% for annonce in annonces %}
-
-    <div class="card border-primary text-white bg-info mb-4 me-5 mt-4" style="width: 15%;">
+    <div class="card border-primary text-white bg-info mb-4 me-5 mt-4  " style="width: 15%;">
         {% if annonce.fileName is null %}
                <img src="{{ asset('images/default.jpg') }}"
                     alt="image par défault d'une maison" class="card-img-top" />
@@ -43,12 +42,13 @@
            Nombre de couchage: {{ annonce.nombreCouchage}}
             <div class="country">{{ annonce.city }}</div>{{ annonce.country }} 
 
-            
+            {{ include('annonce/_delete_form.html.twig') }}
           
                
                    
            
        </div>
+      
     {% endfor %}
     {% endif %}
 

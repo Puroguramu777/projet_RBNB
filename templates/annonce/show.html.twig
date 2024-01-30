@@ -6,25 +6,37 @@
     <h1>Annonce</h1>
 
     <table class="table">
+        <div class="row d-flex flex-row justify-content-center">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ annonce.id }}</td>
-            </tr>
+            <div class="card border-primary text-white bg-info mb-4 me-5 mt-4" style="width: 15%;">
+            {% if annonce.fileName is null %}
+                    <img src="{{ asset('images/default.jpg') }}"
+                         alt="image par défault d'une maison" class="card-img-top" />
+                         {% else %} 
+                         <img src="/images/{{annonce.fileName}}"
+                                 alt="image de la maison" class="card-img-top" />
+                         {% endif %}     
             <tr>
                 <th>Prix</th>
-                <td>{{ annonce.prix }}</td>
+                <td>{{ annonce.prix }}€</td>
             </tr>
             <tr>
                 <th>NombreCouchage</th>
                 <td>{{ annonce.nombreCouchage }}</td>
             </tr>
+            <tr>
+                <th>Equipements disponibles</th>
+                <td></td>
+            </tr>
+            
         </tbody>
     </table>
 
-    <a href="{{ path('app_annonce_index') }}">back to list</a>
+    
+</div>
+</div>
 
-    <a href="{{ path('app_annonce_edit', {'id': annonce.id}) }}">edit</a>
 
-    {{ include('annonce/_delete_form.html.twig') }}
+    
 {% endblock %}
+
