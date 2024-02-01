@@ -26,7 +26,12 @@
             </tr>
             <tr>
                 <th>Equipements disponibles</th>
-                <td></td>
+                {% for equipement in equipements %}
+                <td>
+                    {{ equipement.label }}
+                </td>
+                    {% endfor %}
+                
             </tr>
             
         </tbody>

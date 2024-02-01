@@ -45,10 +45,14 @@ class HomeController extends AbstractController
     }
 
     #[Route('detail/{id}', name: 'app_annonce_show', methods: ['GET'])]
-    public function show(int $id, Annonce $annonce): Response
+    public function show(int $id, Annonce $annonce, AnnonceRepository $annonceRepository): Response
     {
+        $annonce = $annonceRepository->findbyIdWithEquipement($id);
+        $equipements = $annonceRepository->getEquipementByAnnonce($id);
+        
         return $this->render('annonce/show.html.twig', [
             'annonce' => $annonce,
+            'equipements'=> $equipements
         ]);
     }
     

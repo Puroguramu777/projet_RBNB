@@ -18,6 +18,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
         {% endblock %}
+        
         <div class="row d-flex flex-row justify-content-center title pb-3">
             <h1 class="row d-flex flex-row justify-content-center">Logez et Hebergez sur RBNB</h1>
         </div>    
@@ -32,9 +33,11 @@
             <a href="{{ path('app_login') }}" class="upload">Mettre mon logement sur RBNB</a>
             <a href="{{ path('app_login') }}"><i class="fa-solid fa-circle-user user"></i></a>
             {% endif %}
+        
         <div class="row d-flex flex-row justify-content-center">
+
     </head>
-    <body>
+    <body class="body">
         {% block body %}{% endblock %}
     </body>
     <footer></footer>

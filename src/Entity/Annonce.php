@@ -49,6 +49,9 @@ class Annonce
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updateAt = null;
 
+    #[ORM\Column]
+    private ?int $size = null;
+
     //Récupération de toute les propriétés de l'entité
     public function getImageFile() : ?File
      {
@@ -178,6 +181,18 @@ class Annonce
     public function setUpdateAt(?\DateTimeInterface $updateAt): static
     {
         $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    public function getSize(): ?int
+    {
+        return $this->size;
+    }
+
+    public function setSize(int $size): static
+    {
+        $this->size = $size;
 
         return $this;
     }

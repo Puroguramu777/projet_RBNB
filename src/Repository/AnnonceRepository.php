@@ -41,7 +41,7 @@ class AnnonceRepository extends ServiceEntityRepository
             ad.country,
             t.label
             FROM App\Entity\Annonce a
-            JOIN a.address ad
+            JOIN a.address ad           
             join a.typeLogement t   
             
            ');
@@ -57,6 +57,7 @@ class AnnonceRepository extends ServiceEntityRepository
             
     }
 
+    // Requete pour récupérer les annonce d'un utilisateur spécifique
     public function findByUser(int $id)
     {
         $entityManager = $this->getEntityManager();
@@ -79,6 +80,49 @@ class AnnonceRepository extends ServiceEntityRepository
 
             
             return $query->getResult();
+    }
+
+    // Requete pour récupérer les équipement lié a une annonce
+    public function findbyIdWithEquipement(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT
+            a.id,
+            a.prix,
+            a.nombreCouchage,
+            a.fileName,
+            ad.city,
+            ad.country,
+            t.label
+            FROM App\Entity\Annonce a
+            JOIN a.address ad
+            JOIN a.typeLogement t 
+            WHERE a.id = :id'
+        )->setParameter('id', $id);
+        
+        
+
+        return $query->getOneOrNullResult();
+    }
+
+
+    // Et on relit les équipement a l'annonce
+    public function getEquipementByAnnonce(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT
+            e.label,
+            e.id
+            FROM App\Entity\Annonce a
+            JOIN a.equipement e
+            WHERE a.id = :id'
+        )->setParameter('id', $id);
+
+        return $query->getResult();
     }
 
     

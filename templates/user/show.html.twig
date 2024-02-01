@@ -3,7 +3,7 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1>Compte</h1>
 
     <table class="table">
         <tbody>
@@ -12,24 +12,30 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>LastName</th>
+                <th>Nom</th>
                 <td>{{ user.lastName }}</td>
             </tr>
             <tr>
-                <th>FirstName</th>
+                <th>Prénom</th>
                 <td>{{ user.firstName }}</td>
             </tr>
         </tbody>
     </table>
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier mon compte</a>
+
+    <form action="{{ path('app_logout',) }}">
+        
+        <button class="btn btn-warning mb-2 mt-2">Déconnexion</button>
+    </form>
    
 
     {{ include('user/_delete_form.html.twig') }}
 
     <h3>Mes annonces:</h3>
     {% if app.user %}
+    
     {% for annonce in annonces %}
-    <div class="card border-primary text-white bg-info mb-4 me-5 mt-4  " style="width: 15%;">
+    <div class="card border-primary text-white bg-light mb-4 me-5 mt-4  " style="width: 15%;">
         {% if annonce.fileName is null %}
                <img src="{{ asset('images/default.jpg') }}"
                     alt="image par défault d'une maison" class="card-img-top" />
@@ -38,11 +44,12 @@
                             alt="image de la maison" class="card-img-top" />
                     {% endif %}     
        
-       Prix par nuit: {{ annonce.prix }}€ <br>
+       <p class="text-dark">Prix par nuit: {{ annonce.prix }}€ <br>
            Nombre de couchage: {{ annonce.nombreCouchage}}
-            <div class="country">{{ annonce.city }}</div>{{ annonce.country }} 
+            <div class="country text-dark">{{ annonce.city }}</br>{{ annonce.country }}</div> </p>
 
             {{ include('annonce/_delete_form.html.twig') }}
+            <a href="{{ path('app_annonce_edit', {'id': annonce.id}) }}">Modifier</a>
           
                
                    
